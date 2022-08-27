@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 import csv
+import subprocess as sp
 # NOTES:
 # Open urls in terminal
 #   python3 -m webbrowser https://stackoverflow.com
@@ -14,30 +15,34 @@ import csv
 url = "https://www.goodreads.com/list/show/1.Best_Books_Ever"
 page = requests.get(url)
 soup = bs(page.content, 'html.parser')
-# print(soup)
-# titles = soup.find_all('a', class_='bookTitle')
-# authors = soup.find_all('a', class_='authorName')
-# average_ratings = soup.find_all('a', class_='minirating')
 book_containers = soup.find_all('tr')
-# print(type(book_containers))
-# print(len(book_containers))
-data = []
-for i in range(len(book_containers)):
-    title = book_containers[i].find('a', class_='bookTitle')
-    author = book_containers[i].find('a', class_='authorName')
-    rating = book_containers[i].find('span', class_='minirating')
-    tmp = rating.get_text().split()
-    data.append({
-        'title': title.get_text().strip(),
-        'author': author.get_text().strip(),
-        'avg_rating': tmp[0],
-        'total_rating': tmp[4]
-    })
 
-# Saving to dataset
-with open('goodreads.csv', 'w', encoding='UTF8') as f:
-    fields = ['title', 'author', 'avg_rating', 'total_rating']
-    writer = csv.DictWriter(f, fieldnames=fields)
-    writer.writeheader()
-    for item in data:
-        writer.writerow(item)
+# Testing open URLs
+base_url = 'https://www.goodreads.com'
+book = book_containers[0]
+book_href = book.find('a', class_='bookTitle')['href']
+book_url = base_url + book_href
+command = 'python3 -m webbrowser ' + book_url
+process = sp.Popen(command.split(), stdout=sp.PIPE)
+output, error = process.communicate()
+
+# data = []
+# for i in range(len(book_containers)):
+#     title = book_containers[i].find('a', class_='bookTitle')
+#     author = book_containers[i].find('a', class_='authorName')
+#     rating = book_containers[i].find('span', class_='minirating')
+#     tmp = rating.get_text().split()
+#     data.append({
+#         'title': title.get_text().strip(),
+#         'author': author.get_text().strip(),
+#         'avg_rating': tmp[0],
+#         'total_rating': tmp[4]
+#     })
+
+# # Saving to dataset
+# with open('goodreads.csv', 'w', encoding='UTF8') as f:
+#     fields = ['title', 'author', 'avg_rating', 'total_rating']
+#     writer = csv.DictWriter(f, fieldnames=fields)
+#     writer.writeheader()
+#     for item in data:
+#         writer.writerow(item)
