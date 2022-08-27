@@ -1,17 +1,15 @@
 import requests
 from bs4 import BeautifulSoup as bs
+from selenium import webdriver
 import csv
+import time
 import subprocess as sp
-# NOTES:
-# Open urls in terminal
-#   python3 -m webbrowser https://stackoverflow.com
 
 # Todo:
 #   Write automation for scraping books
 #   Save to dataset (xls/csv)
 
 # Scraping
-# url = "https://www.goodreads.com/choiceawards/best-books-2021?ref=nav_brws_gca"
 url = "https://www.goodreads.com/list/show/1.Best_Books_Ever"
 page = requests.get(url)
 soup = bs(page.content, 'html.parser')
@@ -22,8 +20,8 @@ base_url = 'https://www.goodreads.com'
 book = book_containers[0]
 book_href = book.find('a', class_='bookTitle')['href']
 book_url = base_url + book_href
-command = 'python3 -m webbrowser ' + book_url
-process = sp.Popen(command.split(), stdout=sp.PIPE)
+command = ['python3', '-m', 'webbrowser', book_url]
+process = sp.Popen(command, stdout=sp.PIPE)
 output, error = process.communicate()
 
 # data = []
