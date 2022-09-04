@@ -10,24 +10,10 @@ Use the framework [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html
 
 ## BeautifulSoup & Selenium
 
+Use the package [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [Selenium](https://www.selenium.dev/documentation/overview/) to extract data from [goodreads.com](https://www.goodreads.com/list/show/1.Best_Books_Ever).
 
+Gather data about: book title, author, average ratings, total ratings, top genres, (description), rating histograms
 
-## Usage
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+### TODO
+- [ ] Write automation for scraping books
+- [ ] Save to dataset (xls/csv)

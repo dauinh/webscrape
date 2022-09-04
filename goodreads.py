@@ -1,7 +1,3 @@
-# TODO:
-#   Write automation for scraping books
-#   Save to dataset (xls/csv)
-
 import requests
 from bs4 import BeautifulSoup as bs
 import csv
@@ -14,17 +10,23 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
 def test_chromedriver():
-      driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
-      driver.get("https://www.selenium.dev/selenium/web/web-form.html")
-      title = driver.title
-      print(title)
-      driver.implicitly_wait(0.5)
-      text_box = driver.find_element(by=By.NAME, value="my-text")
-      submit_button = driver.find_element(by=By.CSS_SELECTOR, value="button")
-      text_box.send_keys("Selenium")
-      submit_button.click()
-      # value = message.text
+    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
+    driver.get("https://www.selenium.dev/selenium/web/web-form.html")
+    title = driver.title
+    print(title)
+    driver.implicitly_wait(0.5)
+    text_box = driver.find_element(by=By.NAME, value="my-text")
+    submit_button = driver.find_element(by=By.CSS_SELECTOR, value="button")
+    text_box.send_keys("Selenium")
+    submit_button.click()
+    # value = message.text
 
+def get_book(url):
+    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
+    driver.get(url)
+    title = driver.title
+    print(title)
+    driver.implicitly_wait(0.5)
 
 # Scraping
 url = "https://www.goodreads.com/list/show/1.Best_Books_Ever"
@@ -33,10 +35,10 @@ soup = bs(page.content, 'html.parser')
 book_containers = soup.find_all('tr')
 
 # Testing open URLs
-# base_url = 'https://www.goodreads.com'
-# book = book_containers[0]
-# book_href = book.find('a', class_='bookTitle')['href']
-# book_url = base_url + book_href
+base_url = 'https://www.goodreads.com'
+book_href = book_containers[0].find('a', class_='bookTitle')['href']
+book_url = base_url + book_href
+get_book(book_url)
 # command = ['python3', '-m', 'webbrowser', book_url]
 # process = sp.Popen(command, stdout=sp.PIPE)
 # output, error = process.communicate()
