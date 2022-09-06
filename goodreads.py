@@ -4,10 +4,13 @@ import csv
 import time
 import subprocess as sp
 
+import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+
+chromedriver_autoinstaller.install()
 
 def test_chromedriver():
     driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
@@ -22,11 +25,12 @@ def test_chromedriver():
     # value = message.text
 
 def get_book(url):
-    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
+    # driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
+    driver = webdriver.Chrome()
     driver.get(url)
     title = driver.title
-    print(title)
-    driver.implicitly_wait(0.5)
+    # print(title)
+    driver.implicitly_wait(5)
     stars = driver.find_elements(By.CSS_SELECTOR, '[aria-label="Number of ratings and percentage of total ratings"]')
     
     ratings = []
@@ -47,11 +51,15 @@ book_containers = soup.find_all('tr')
 # Opening URLs
 base_url = 'https://www.goodreads.com'
 # for i in range(len(book_containers)):
-for i in range(2):
+for i in range(5):
     book_href = book_containers[i].find('a', class_='bookTitle')['href']
     book_url = base_url + book_href
-    ratings = get_book(book_url)
-    print(ratings)
+    try:
+        ratings = get_book(book_url)
+        # print(ratings)
+    except:
+        print('error for', book_href)
+
 
 
 # data = []
