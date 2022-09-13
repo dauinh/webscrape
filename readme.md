@@ -1,4 +1,4 @@
-# Webscrape
+# Webscrape At a Glance
 
 This project explores how to scrape the web.
 
@@ -10,10 +10,8 @@ Use the framework [Scrapy](https://docs.scrapy.org/en/latest/intro/tutorial.html
 
 ## BeautifulSoup & Selenium
 
-Use the package [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [Selenium](https://www.selenium.dev/documentation/overview/) to extract data from [goodreads.com](https://www.goodreads.com/list/show/1.Best_Books_Ever).
+Use the package [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and [Selenium](https://www.selenium.dev/documentation/overview/) to extract data from [Goodreads' best books ever](https://www.goodreads.com/list/show/1.Best_Books_Ever) and save to a csv file.
 
-Gather data about: book title, author, average ratings, total ratings, top genres, (description), rating histograms
+Gather data about: book title, author, average ratings, total ratings, top genres, rating distribution
 
-### TODO
-- [ ] Write automation for scraping books
-- [ ] Save to dataset (xls/csv)
+Top genres and rating distribution are gathered by accessing each book's website. However, both categories have missing values (about half). Goodreads has a function to determine how the webpage looks like based on how many signed out pagehits there are and how recent is the interstitial. Current script is based on Goodreads with React components.
